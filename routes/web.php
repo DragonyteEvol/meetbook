@@ -35,4 +35,17 @@ Route::group(['middleware'=>'auth'],function(){
 	//USERS
 
 	Route::get('admin/users','AdminRouteController@homeUsers');
+	Route::delete('admin/users/delete/{id}','AdminUserController@deleteUser')->name('deleteUser');
+
+	//BOOKS
+	Route::get('admin/books','AdminRouteController@homeBooks');
+	Route::get('admin/books/insert','AdminRouteController@insertBook')->name('insertBook');
+	Route::post('admin/books/store','AdminBookController@store')->name('storeBook');
+	Route::get('admin/books/show/{id}','AdminBookController@showBook');
+
+	//AUTHORS
+
+	Route::get('admin/authors','AdminAuthorController@homeAuthors');
+	Route::get('admin/authors/insert','AdminAuthorController@insertAuthor')->name('insertAuthor');
+	Route::post('admin/authors/store','AdminAuthorController@storeAuthor')->name('storeAuthor');
 });

@@ -11,4 +11,10 @@ class IsAdmin{
 			return view("admin." . $view);
 		}
 	}
+
+	static function allowAdminNoView(){
+		if(Auth::user()->admin==false){
+			return redirect('home');
+		}
+	}
 }

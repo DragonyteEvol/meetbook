@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @include('components.navbar')
+@section('css')
+<link rel="stylesheet" href="{{asset('resource/jquery_ui/jquery-ui.min.css')}}">
+@endsection
 @section('content')
 <h4>Libro Nuevo</h4>
 <form class="form" method="POST" action="{{route('storeBook')}}" enctype="multipart/form-data">
@@ -24,4 +27,8 @@
 	<input type="file" name="image"class="form-control"><br>
 	<input type="submit" class="btn btn-outline-primary btn-block" value="Crear Libro">
 </form>
+@endsection
+@section('js')
+<script src="{{asset('resource/jquery.js')}}"></script>
+<script src="{{asset('resource/jquery_ui/jquery-ui.min.js')}}"></script>
 @endsection

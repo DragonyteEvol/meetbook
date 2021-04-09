@@ -42,10 +42,16 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('admin/books/insert','AdminRouteController@insertBook')->name('insertBook');
 	Route::post('admin/books/store','AdminBookController@store')->name('storeBook');
 	Route::get('admin/books/show/{id}','AdminBookController@showBook');
-
+	Route::put('admin/books/edit/{id}','AdminBookController@editBook')->name('editBook');
 	//AUTHORS
 
 	Route::get('admin/authors','AdminAuthorController@homeAuthors');
 	Route::get('admin/authors/insert','AdminAuthorController@insertAuthor')->name('insertAuthor');
 	Route::post('admin/authors/store','AdminAuthorController@storeAuthor')->name('storeAuthor');
+	Route::get('admin/authors/show/{id}','AdminAuthorController@showAuthor')->name('showAuthor');
+	Route::put("admin/authors/edit/{id}","AdminAuthorController@editAuthor")->name("editAuthor");
+
+	//SEARCH
+	Route::post('admin/books/search/authors','AdminBookController@searchAutocompleteAuthors')->name('searchBooks');
+	
 });

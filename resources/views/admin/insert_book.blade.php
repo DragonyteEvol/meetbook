@@ -10,7 +10,8 @@
 	<label class="form-label">Titulo</label>
 	<input type="text" name="title" class="form-control">
 	<label class="form-label">Author</label>
-	<input type="number" name="id_author"class="form-control">
+	<input type="text" name="id_author"class="form-control" id="author">
+	<div id="search"></div>
 	<label class="form-label">Saga</label>
 	<input type="text" name="name_saga"class="form-control">
 	<label class="form-label">Sinopsis</label>
@@ -31,4 +32,33 @@
 @section('js')
 <script src="{{asset('resource/jquery.js')}}"></script>
 <script src="{{asset('resource/jquery_ui/jquery-ui.min.js')}}"></script>
+<script>
+$(document).ready(function(){
+	$('#author').keyup(function(){
+		if($('#author').val() !=''){
+		$.ajax({
+		url: "{{route('searchBooks')}}",
+		method: "POST",
+		data:{
+		_token:$('input[name="_token"]').val(),
+		entry: $('#author').val()
+		}
+	}).done(function(data){
+		var author = JSON.parse(data);
+		var print="<ul id='lista' class='dropdown-menu' style='display:block;position:relative'>"
+		for(var i=0;i<author.length;i++){
+			print += "<li><a>" + author[i].name + '-' + author[i].id  + "</a></li>"
+		}
+		print += "</ul>";
+		var list=document.getElementById('lista');
+		if(!list){
+		}else{
+			x=list.parentNode;
+			x.removeChild(list);
+		}
+		$('#search').append(print);
+	})}
+		})
+})	
+</script>
 @endsection

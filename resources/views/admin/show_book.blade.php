@@ -1,7 +1,8 @@
 @extends('layouts.master')
 @include('components.navbar')
 @section('content')
-<form class="form">
+<form class="form" action="{{route('editBook',$data[0]->id)}}" method="POST">
+	@method('PUT')
 	{{csrf_field()}}
 	@foreach($data as $book)
 	<div class="card mb-3">
@@ -25,7 +26,10 @@
 			<label class="form-label">LENGUAJES</label>
 			<input type="text" name="languages" value="{{$book->languages}}" class="form-control">
 			<label class="form-label">IMAGEN</label>
-			<input type="file" name="image" value="{{$book->image}}" class="form-control">
+			<br>
+			<div class="d-grid gap-2">
+				<input type="submit" class="btn btn-outline-primary form-control" value="Editar Libro">
+			</div>
 		</div>
 	</div>
 	@endforeach

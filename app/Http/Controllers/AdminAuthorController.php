@@ -27,4 +27,13 @@ class AdminAuthorController extends Controller
 		Author::create($entry);
 		return redirect('admin/authors');
 	}
+
+	public function showAuthor($id){
+		return IsAdmin::allowAdmin('show_author')->with('data',Author::findOrFail($id));
+	}
+
+	public function editAuthor(Request $request,$id){
+		Author::findOrFail($id)->update($request->all());
+		return redirect('admin/authors');
+	}
 }

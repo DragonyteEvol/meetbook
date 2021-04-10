@@ -52,6 +52,9 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::put("admin/authors/edit/{id}","AdminAuthorController@editAuthor")->name("editAuthor");
 
 	//SEARCH
-	Route::post('admin/books/search/authors','AdminBookController@searchAutocompleteAuthors')->name('searchBooks');
+	Route::get('admin/users/search/users','AdminSearchController@searchAutocompleteUsers')->name('searchUsers');
+	Route::get('admin/books/search/books/','AdminSearchController@searchAutocompleteBooks')->name('searchBook');
+	Route::get('admin/authors/search/authors','AdminSearchController@searchAutocompleteAuthors')->name('searchAuthor');
+	Route::get('admin/books/search/id/authors','AdminSearchController@searchAutocompleteIdAuthors')->name('searchIdAuthor');
 	
 });

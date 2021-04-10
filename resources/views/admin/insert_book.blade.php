@@ -31,34 +31,32 @@
 @endsection
 @section('js')
 <script src="{{asset('resource/jquery.js')}}"></script>
-<script src="{{asset('resource/jquery_ui/jquery-ui.min.js')}}"></script>
 <script>
 $(document).ready(function(){
 	$('#author').keyup(function(){
-		if($('#author').val() !=''){
 		$.ajax({
-		url: "{{route('searchBooks')}}",
-		method: "POST",
-		data:{
-		_token:$('input[name="_token"]').val(),
-		entry: $('#author').val()
+		url : "{{route('searchIdAuthor')}}",
+		method : "GET",
+		data : {
+			_token : $('input[name="_token"]').val(),
+				text : $('#author').val()
 		}
-	}).done(function(data){
-		var author = JSON.parse(data);
-		var print="<ul id='lista' class='dropdown-menu' style='display:block;position:relative'>"
-		for(var i=0;i<author.length;i++){
-			print += "<li><a>" + author[i].name + '-' + author[i].id  + "</a></li>"
+	}).done(function(datajson){
+		var data = JSON.parse(datajson);
+		var print = "<ul class='dropdown-menu' style='display:block;position:relative'>"
+		for(var i=0;i<data.length;i++){
+			print+="<li onclick='identify("+data[i].id+")'>"+data[i].name+"</li>";
 		}
-		print += "</ul>";
-		var list=document.getElementById('lista');
-		if(!list){
-		}else{
-			x=list.parentNode;
-			x.removeChild(list);
-		}
-		$('#search').append(print);
-	})}
-		})
-})	
+		print+="</ul>";
+		document.getElementById('search').innerHTML=print;
+	})
+	})
+
+})
+</script>
+<script>
+	function identify(value){
+		document.getElementById('author').value=value;
+	}
 </script>
 @endsection

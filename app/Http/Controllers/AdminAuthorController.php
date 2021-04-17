@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Author;
 use App\IsAdmin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthorController extends Controller
 {
+
 	public function homeAuthors(){
 		return IsAdmin::allowAdmin('authors')->with('data',Author::all());
 	}
@@ -17,7 +19,6 @@ class AdminAuthorController extends Controller
 	}
 
 	public function storeAuthor(Request $request){
-		return IsAdmin::allowAdminNoView();
 		$entry=$request->all();
 		if($file=$request->file('image')){
 			$name=str_replace(" ","_",$entry['name'] . $entry['born'] . "." . $file->getClientOriginalExtension());

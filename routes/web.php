@@ -25,6 +25,10 @@ Auth::routes();
 //ROUTES PROTEGIDAS
 Route::group(['middleware'=>'auth'],function(){
 	Route::get('/home','RouteController@home');
+	Route::get('profile/{user}','RouteController@profile');
+
+	//SEARCH
+	Route::get('/search/books/profiles/autocomplete','SearchController@searchBookProfileAutocomplete')->name('searchBookProfileAutocomplete');
 });
 
 

@@ -16,4 +16,8 @@ class RouteController extends Controller
 			return view('home')->with('data',$data);
 		}
 	}
+
+	public function profile(){
+		return view('profile')->with('data',User::findOrFail(Auth::user()->id));
+	}
 }

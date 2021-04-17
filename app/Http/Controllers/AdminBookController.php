@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 class AdminBookController extends Controller
 {
 	public function store(Request $request){
-		return IsAdmin::allowAdminNoView();
 		$entry=$request->all();
 		if($file=$request->file('image')){
 			$name=str_replace(" ","_",$entry['title']) . '.' . $file->getClientOriginalExtension();

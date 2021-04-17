@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 class AdminSearchController extends Controller
 {
 	public function searchAutocompleteUsers(Request $request){
+		IsAdmin::allowAdminNoView();
 		$users=User::where('name','LIKE','%'.$request->text.'%')->select('users.*')->get();
 		return IsAdmin::allowAdmin('users')->with('data',$users);
 	}

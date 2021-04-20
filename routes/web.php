@@ -27,8 +27,18 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('/home','RouteController@home');
 	Route::get('profile/{user}','RouteController@profile');
 
+	//BOOKS
+	Route::get('book/show/{id}','BookController@showBook')->name('showBookUser');
+
+	//USERS 
+	Route::get('user/show/{id}','UserController@showUser')->name('showUserUser');
+
+	//AUTHORS
+	Route::get('author/show/{id}','AuthorController@showAuthor')->name('showAuthorUser');
+
 	//SEARCH
 	Route::get('/search/books/profiles/autocomplete','SearchController@searchBookProfileAutocomplete')->name('searchBookProfileAutocomplete');
+	Route::get('search/books/profiles','SearchController@searchBookProfile')->name('searchBookProfile');
 });
 
 

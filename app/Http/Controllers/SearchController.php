@@ -24,15 +24,15 @@ class SearchController extends Controller
 		}
 
 	public function searchBookProfile(Request $request){
-		$a = DB::table('books')->where('title','LIKE','%'.$request->search.'%')->select('title as name','image','id')->take(5)->get();
+		$a = DB::table('books')->where('title','LIKE','%'.$request->search.'%')->select('title as name','image','id')->get();
 		$a->map(function($a){
 		$a->type = 1;
 		});
-		$b = DB::table('authors')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->take(5)->get();
+		$b = DB::table('authors')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->get();
 		$b->map(function($b){
 		$b->type = 2;
 		});
-		$c = DB::table('users')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->take(5)->get();
+		$c = DB::table('users')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->get();
 		$c->map(function($c){
 		$c->type = 3;
 		});

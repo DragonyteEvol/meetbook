@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Book;
+use App\BookGenre;
 use App\IsAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class AdminBookController extends Controller
 {
 	public function store(Request $request){
-		$entry=$request->all();
+		$entry=$request->except(["tags","genre","tag_name"]);
 		if($file=$request->file('image')){
 			$name=str_replace(" ","_",$entry['title']) . '.' . $file->getClientOriginalExtension();
 			$file->move("books_image",$name);
@@ -22,7 +23,15 @@ class AdminBookController extends Controller
 		}else{
 			$entry['saga']=true;
 		}
-		Book::create($entry);
+		$book=Book::create($entry);
+		$genre = explode(",",$request->genre);	
+		$lon = count($genre);
+		for($i=0;$i<$lon;$i++){
+			$inst= new BookGenre();
+			$inst->book_id=$book->id;
+			$inst->genre_id=$genre[$i];
+			$inst->save();
+		}
 		return redirect('admin/books');
 	}
 

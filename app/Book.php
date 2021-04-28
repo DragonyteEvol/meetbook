@@ -8,4 +8,7 @@ class Book extends Model
 {
 	protected $fillable=['title','id_author','saga','name_saga','synopsis','sheets','date','languages','reads','image'];
 
+	public function genres(){
+		return $this->belongsToMany(Genre::class);
+	}
 }

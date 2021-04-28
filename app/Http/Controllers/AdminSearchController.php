@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Author;
 use App\Book;
+use App\Genre;
 use App\IsAdmin;
 use App\User;
 use Illuminate\Http\Request;
@@ -33,6 +34,12 @@ class AdminSearchController extends Controller
 	public function searchAutocompleteIdAuthors(Request $request){
 		IsAdmin::allowAdminNoView();
 		$data=DB::table('authors')->where('name','LIKE','%'.$request->text.'%')->select('authors.id','authors.name')->get();
+		return response(json_encode($data));
+	}
+
+	public function searchAutocompleteGenres(Request $request){
+		IsAdmin::allowAdminNoView();
+		$data = Genre::where('genre','LIKE','%'.$request->text.'%')->get();
 		return response(json_encode($data));
 	}
 }

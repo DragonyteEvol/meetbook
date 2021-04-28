@@ -39,6 +39,12 @@ Route::group(['middleware'=>'auth'],function(){
 	//SEARCH
 	Route::get('/search/books/profiles/autocomplete','SearchController@searchBookProfileAutocomplete')->name('searchBookProfileAutocomplete');
 	Route::get('search/books/profiles','SearchController@searchBookProfile')->name('searchBookProfile');
+	
+	//REVIEWS
+	Route::post('review/store','ReviewController@storeReview')->name('storeReviewUser');
+
+	//TEST
+	Route::post('test','TestController@test')->name('test');
 });
 
 
@@ -65,10 +71,18 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('admin/authors/show/{id}','AdminAuthorController@showAuthor')->name('showAuthor');
 	Route::put("admin/authors/edit/{id}","AdminAuthorController@editAuthor")->name("editAuthor");
 
+	//GENRES
+	Route::get('admin/genres','AdminGenreController@homeGenres');
+	Route::get('admin/genres/insert','AdminGenreController@insetGenre')->name('insertGenre');
+	Route::post('admin/genres/store','AdminGenreController@storeGenre')->name('storeGenre');
+	Route::get('admin/genres/show/{id}','AdminGenreController@showGenre')->name('showGenre');
+	Route::put('admin/genres/edit/{id}','AdminGenreController@editGenre')->name('editGenre');
+
 	//SEARCH
 	Route::get('admin/users/search/users','AdminSearchController@searchAutocompleteUsers')->name('searchUsers');
 	Route::get('admin/books/search/books/','AdminSearchController@searchAutocompleteBooks')->name('searchBook');
 	Route::get('admin/authors/search/authors','AdminSearchController@searchAutocompleteAuthors')->name('searchAuthor');
 	Route::get('admin/books/search/id/authors','AdminSearchController@searchAutocompleteIdAuthors')->name('searchIdAuthor');
+	Route::get('admin/genres/search/genres','AdminSearchController@searchAutocompleteGenres')->name('searchGenres');
 	
 });

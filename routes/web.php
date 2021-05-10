@@ -29,6 +29,7 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//BOOKS
 	Route::get('book/show/{id}','BookController@showBook')->name('showBookUser');
+	Route::get('saga/show/{name}','BookController@showSaga')->name('showSagaUser');
 
 	//USERS 
 	Route::get('user/show/{id}','UserController@showUser')->name('showUserUser');
@@ -43,8 +44,23 @@ Route::group(['middleware'=>'auth'],function(){
 	//REVIEWS
 	Route::post('review/store','ReviewController@storeReview')->name('storeReviewUser');
 
+	//POSTS
+	Route::post('store/post/{id}','PostController@storePost')->name('storePostUser');
+
+	//PROFILE
+	Route::get('/show/profile/','ProfileController@showProfile')->name('showProfile');
+
+	//LIBRARY
+	Route::post('/store/library','LibraryController@storeItemLibrary')->name('storeItemLibraryUser');
+
+	//RELATIONS
+	Route::post('follow/','RelationController@followUser')->name('followUser');
+
 	//TEST
 	Route::post('test','TestController@test')->name('test');
+
+
+
 });
 
 
@@ -85,4 +101,5 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('admin/books/search/id/authors','AdminSearchController@searchAutocompleteIdAuthors')->name('searchIdAuthor');
 	Route::get('admin/genres/search/genres','AdminSearchController@searchAutocompleteGenres')->name('searchGenres');
 	
+
 });

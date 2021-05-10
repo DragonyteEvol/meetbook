@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Review;
 use App\UserReviewCount;
 use App\Calification;
+use App\PostMuch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,12 +20,8 @@ class ReviewController extends Controller
 			$count->book_id = $request->book_id;
 			$count->count = 1;
 			$count->save();
-			$review = new Review;
-			$review->description = $request->description;
-			$review->book_id = $request->book_id;
-			$review->user_id = Auth::user()->id;
-			$review->calification = $request->calification;
-			$review->save();
+			$new= ['description'=>$request->description,'book_id'=>$request->book_id,'user_id'=>Auth::user()->id,'calification'=>$request->calification,'target_id'=>Auth::user()->id,'type'=>1];
+			Review::create($new);
 			if(count($calification_count)==0){
 				$calification = new Calification;
 				$calification->book_id = $request->book_id;
@@ -61,12 +58,8 @@ class ReviewController extends Controller
 			}
 			return redirect()->back();
 		}else if($count_review[0]->count<=2){
-			$review = new Review;
-			$review->description = $request->description;
-			$review->book_id = $request->book_id;
-			$review->user_id = Auth::user()->id;
-			$review->calification = $request->calification;
-			$review->save();
+			$new= ['description'=>$request->description,'book_id'=>$request->book_id,'user_id'=>Auth::user()->id,'calification'=>$request->calification,'target_id'=>Auth::user()->id,'type'=>1];
+			Review::create($new);
 			$add=UserReviewCount::findOrFail($count_review[0]->id);
 			$add->count = $add->count + 1;
 			$add->save();

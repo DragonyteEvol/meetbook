@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateReviewsTable extends Migration
+class CreateDescLibrariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateReviewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('desc_libraries', function (Blueprint $table) {
             $table->id();
 	    $table->string('description');
-	    $table->integer('book_id');
-	    $table->integer('user_id');
-	    $table->integer('calification');
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateReviewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('desc_libraries');
     }
 }

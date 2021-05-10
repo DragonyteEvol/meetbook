@@ -3,23 +3,42 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{asset('css/stars.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/paginator.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
 @endsection
 @section('content')
-<div class="container">
+<div class="container opacy">
 	@foreach($data as $book)
 	<div class="row">
 		<div class="col-4">
-			<img src="{{asset('books_image/'.$book->image)}}" width="100%" height="415px" style="border-radius: 5px;">
+			<img src="{{asset('books_image/'.$book->image)}}" width="100%" height="415px" style="border-radius: 5px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;">
+			<div class="d-grid gap-2 mt-2">
+				<button  class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"  style="border-radius:15px ;"  type="button"><b>Agregar a biblioteca</b></button>
+				<ul class="dropdown-menu" >
+					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},1)">Lista De Deseos</a></li>
+					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},2)">Leyendo</a></li>
+					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},3)">Leido</a></li>
+					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},4)">Favoritos</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item" href="#">Separated link</a></li>
+				</ul>
+				<button class="btn btn-primary" style="border-radius:15px ;"  type="button"><b>Comprar</b></button>
+			</div>
 			<hr>
-			<p><b>Libros Relacionados</b></p>
+			@if(count($relations)>0)
+			<p><b>{{$relations[0]->name_saga}} Saga</b></p>
+			<hr>
 			<div class="row">
 				@foreach($relations as $relation)
 				<div class="col-3">
-					<a href="{{route('showBookUser',$relation->id)}}"><img src="{{asset('books_image/' . $relation->image)}}" width="100%" height="85rem" style="margin-bottom: 2px;" title="{{$relation->title}}"></a>
+					<a href="{{route('showBookUser',$relation->id)}}"><img src="{{asset('books_image/' . $relation->image)}}" width="100%" height="85rem" style="margin-bottom: 2px;border-top-right-radius: 10px;border-bottom-right-radius: 10px;" title="{{$relation->title}}"></a>
 				</div>
 				@endforeach
 			</div>	
+			<div>
+				<a href="{{route('showSagaUser',$relations[0]->name_saga)}}" class="link-dark"><b>Ver más</b></a>	
+			</div>
 			<hr>
+			@endif
 		</div>
 		<div class="col-8">
 			<h3><b>{{$book->title}}</b></h3>
@@ -109,4 +128,21 @@
 	@endsection
 	@section('js')
 	<script src="{{asset('js/search_nav.js')}}"></script>
+	<script>
+		function storeInLibrary(id,library){
+					$(document).ready(function(){
+								$.ajax({
+											method: "POST",
+											url: "{{route('storeItemLibraryUser')}}",
+											data:{
+														_token : $("input[name='_token']").val(),
+														library: library,
+														book_id: id
+													}
+											}).done(function(dataJson){
+														console.log(dataJson);
+												})
+							})
+				}
+	</script>
 	@endsection

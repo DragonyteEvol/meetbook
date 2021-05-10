@@ -4,7 +4,7 @@
 			<a href="/LARAVEL/meetbook/public/admin/home"><img src="{{asset('web_image/icon.png')}}" width="40px" height="50px"></a>
 		</div>	
 		<div style="display: inline-block;" class="mx-5 my-2">
-			<a href="profile/{{Auth::user()->name}}" style="text-decoration: none;" class="link-dark">
+			<a href="{{route('showProfile')}}" style="text-decoration: none;" class="link-dark">
 				<img src="{{asset('users_image/'.Auth::user()->image)}}" width="25px" height="25px" style="border-radius: 150px;">
 				<b>{{Auth::user()->name}}</b>
 </a>

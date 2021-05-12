@@ -16,6 +16,35 @@
 			<p><b>Pais: </b><span style="font-size: small;">{{Auth::user()->country}}</span></p>
 			<p><b>Sitio web: </b><a href="#" style="font-size: small;">{{Auth::user()->website}}</a></p>
 			<p><b>Descripción: </b><span style="font-size: small;">{{Auth::user()->description}}</span></p>
+			<hr>
+			<h4><b>Amigos</b></h4>
+			<div class="row">
+
+			</div>
+			<hr>
+			<div>
+				<div class="row">
+					<h4><b>Seguidores</b></h4>
+					@foreach($followers as $follower)
+					<div class="col-3">
+						<a href="{{route('showUserUser',$follower->user_id)}}"><img class="my-1" src="{{asset('users_image/'.$follower->image)}}" title="{{$follower->name}}" width="100%" style="border-radius: 100%;" height="45rem"></a>	
+					</div>
+					@endforeach
+					<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
+				</div></div>
+				<hr>
+				<div>
+					<h4><b>Personas a las que sigues</b></h4>
+					<div class="row">
+						@foreach($follows as $follow)
+						<div class="col-3">
+							<a href="{{route('showUserUser',$follow->target_id)}}"><img class="my-1" src="{{asset('users_image/'.$follow->image)}}" title="{{$follower->name}}" width="100%" style="border-radius: 100%;" height="45rem"></a>	
+						</div>
+						@endforeach
+						<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
+					</div>
+
+				</div>
 		</div>
 		<div class="col-7">
 			<h4><b>Publicaciones y reviews</b></h4>
@@ -99,36 +128,36 @@
 			</div>
 			<hr>
 			<!--LEIDOS--!>
-			<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="p-2">
+				<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="p-2">
 				<h5><b>Libros leidos</b></h5>	
 				<hr>
 				<div class="row">
-					@foreach($reads as $read)
-						<div class="col-6">
-							<img src="{{asset('books_image/'.$read->image)}}" title="{{$read->title}}" width="100%" height="86rem" style="border-radius: 5px;" class="my-1">
-						</div>
-					@endforeach
-					<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
+				@foreach($reads as $read)
+				<div class="col-6">
+				<img src="{{asset('books_image/'.$read->image)}}" title="{{$read->title}}" width="100%" height="86rem" style="border-radius: 5px;" class="my-1">
+				</div>
+				@endforeach
+				<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
 				</div>
 
-			</div>
-			<hr>
-			<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="p-2">
+				</div>
+				<hr>
+				<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="p-2">
 				<h5><b>Leyendo</b></h5>	
 				<hr>
 				<div class="row">
 				@foreach($readings as $reading)
-					<div class="col-6">
-							<img src="{{asset('books_image/'.$reading->image)}}" title="{{$reading->title}}" width="100%" height="86rem" style="border-radius: 5px;" class="my-1">
-					</div>					
+				<div class="col-6">
+				<img src="{{asset('books_image/'.$reading->image)}}" title="{{$reading->title}}" width="100%" height="86rem" style="border-radius: 5px;" class="my-1">
+				</div>					
 				@endforeach
-					<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
+				<a href="#" style="font-size: small;" class="link-dark"><b>Ver más<img width="14rem" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAWklEQVRIie2UMQqAMBDA0k9Lf+AqCA5CB8F/6tKhw43NULhA14Qex0GSdCpwWvId+Pq7jcA1BNaOtCBSZgZKEHmMyGtG1F/oI1Ll0Zqq8qnopwJgAw5LnizODxAKMnEa9zMcAAAAAElFTkSuQmCC"/></b></a>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endsection
-@section('js')
-<script src="{{asset('js/search_nav.js')}}"></script>
-@endsection
+				</div>
+				</div>
+				</div>
+				</div>
+				@endsection
+				@section('js')
+				<script src="{{asset('js/search_nav.js')}}"></script>
+				@endsection

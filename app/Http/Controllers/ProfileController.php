@@ -15,6 +15,8 @@ class ProfileController extends Controller
 		$favorites=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',Auth::user()->id)->where('library','=',4)->select('books.title','books.image','books.id')->take(2)->get();
 		$reads=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',Auth::user()->id)->where('library','=',3)->select('books.title','books.image','books.id')->take(2)->get();
 		$readings=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',Auth::user()->id)->where('library','=',2)->select('books.title','books.image','books.id')->take(2)->get();
-		return view('show_profile')->with('reviews',$reviews)->with('favorites',$favorites)->with('reads',$reads)->with('readings',$readings);
+		$followers = DB::table('relations')->join('users','users.id','=','relations.user_id')->where('target_id','=',Auth::user()->id)->select('relations.user_id','users.image','users.name')->take(8)->get();
+		$follows = DB::table('relations')->join('users','users.id','=','relations.target_id')->where('user_id','=',Auth::user()->id)->select('relations.target_id','users.image','users.name')->take(8)->get();
+		return view('show_profile')->with('reviews',$reviews)->with('favorites',$favorites)->with('reads',$reads)->with('readings',$readings)->with('followers',$followers)->with('follows',$follows);
 	}
 }

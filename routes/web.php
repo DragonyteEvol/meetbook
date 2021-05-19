@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes();
 
@@ -55,6 +55,9 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//RELATIONS
 	Route::post('follow/','RelationController@followUser')->name('followUser');
+	Route::post('add/friend/{id}','RelationController@addFriend')->name('addFriendUser');
+	Route::post('allow/process/friend','RelationController@allowFriend')->name('allowFriend');
+	Route::delete('delete/process/friend','RelationController@declineFriend')->name('declineFriend');
 
 	//TEST
 	Route::post('test','TestController@test')->name('test');

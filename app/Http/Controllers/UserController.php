@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\FriendProcess;
 use App\Relation;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,13 +12,54 @@ use Illuminate\Support\Facades\DB;
 class UserController extends Controller
 {
 	public function showUser($id){
-		$reviews= DB::table('posts')->where('target_id','=',$id)->leftJoin('books','books.id','=','posts.book_id')->leftJoin('authors','authors.id','=','books.id_author')->leftJoin('users','users.id','=','posts.user_id')->select('posts.*','books.title','books.synopsis','books.image','authors.name','users.name as name_user','users.image as image_user')->orderBy('created_at','desc')->get();
-		$follow_check= DB::table('relations')->where('user_id','=',Auth::user()->id)->where('target_id','=',$id)->get();
+		if(Auth::user()->id==$id){
+			return redirect('/show/profile/');
+		}
+		$reviews= DB::table('posts')->where('target_id','=',$id)->leftJoin('books','books.id','=','posts.book_id')->leftJoin('authors','authors.id','=','books.id_author')->leftJoin('users','users.id','=','posts.user_id')->select('posts.*','books.title','books.synopsis','books.image','authors.name','users.name as name_user','users.image as image_user','authors.id as author_id')->orderBy('created_at','desc')->get();
+		//FOLLOW CHECK
+		if(count(DB::table('relations')->where('user_id','=',Auth::user()->id)->where('target_id','=',$id)->get())==0){
+			$follow_check=['message'=>'Seguir','class'=>'btn btn-primary form-control'];
+		}else{
+			$follow_check=['message'=>'Dejar de seguir','class'=>'btn btn-danger form-control'];
+		}
+		//FRIEND CHECK
+		if(count(FriendProcess::where('sender_id','=',Auth::user()->id)->where('target_id','=',$id)->get())==1 || count(FriendProcess::where('target_id','=',Auth::user()->id)->where('sender_id','=',$id)->get())==1){
+			$friend_check=['message'=>'Cancelar solicitud','class'=>'btn btn-info form-control'];
+		}else{
+			if(count(Relation::where('user_id','=',Auth::user()->id)->where('target_id','=',$id)->where('friend','=',true)->get())==1 || count(Relation::where('target_id','=',Auth::user()->id)->where('user_id','=',$id)->where('friend','=',true)->get())==1){
+			$friend_check=['message'=>'Eliminar amigo','class'=>'btn btn-danger form-control'];
+			}else{
+			$friend_check=['message'=>'Añadir amigo','class'=>'btn btn-primary form-control'];
+			}
+		}
+
+	//BOOKS
 		$favorites=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',4)->select('books.title','books.image','books.id')->take(2)->get();
 		$reads=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',3)->select('books.title','books.image','books.id')->take(2)->get();
 		$readings=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',2)->select('books.title','books.image','books.id')->take(2)->get();
-		$followers = DB::table('relations')->join('users','users.id','=','relations.user_id')->where('target_id','=',$id)->select('relations.user_id','users.image','users.name')->take(8)->get();
-		$follows = DB::table('relations')->join('users','users.id','=','relations.target_id')->where('user_id','=',$id)->select('relations.target_id','users.image','users.name')->take(8)->get();
-		return view('show_user')->with('data',User::findOrFail($id))->with('reviews',$reviews)->with('follow_check',$follow_check)->with('followers',$followers)->with('follows',$follows)->with('favorites',$favorites)->with('reads',$reads)->with('readings',$readings);
+
+	//RELATIONS
+		$followers = DB::table('relations')->join('users','users.id','=','relations.user_id')->where('target_id','=',$id)->where('follow',true)->select('relations.user_id','users.image','users.name')->take(4)->get();
+		$followers_count = count(DB::table('relations')->join('users','users.id','=','relations.user_id')->where('target_id','=',$id)->where('follow',true)->select('relations.user_id','users.image','users.name')->take(4)->get());
+		$follows = DB::table('relations')->join('users','users.id','=','relations.target_id')->where('user_id','=',$id)->where('follow',true)->select('relations.target_id','users.image','users.name')->take(8)->get();
+		$follows_count = count(DB::table('relations')->join('users','users.id','=','relations.target_id')->where('user_id','=',$id)->where('follow',true)->select('relations.target_id','users.image','users.name')->take(8)->get());
+		$friends= DB::table('friends')->join('users','users.id','=','friends.user_b')->where('friends.user_a','=',$id)->select('users.image','users.name','users.id','friends.created_at')->take(8)->get();
+		$friends_count= count(DB::table('friends')->join('users','users.id','=','friends.user_b')->where('friends.user_a','=',$id)->select('users.image','users.name','users.id','friends.created_at')->take(8)->get());
+
+		//RETURN
+		return view('show_user')
+			->with('data',User::findOrFail($id))
+			->with('reviews',$reviews)
+			->with('follow_check',$follow_check)
+			->with('followers',$followers)
+			->with('follows',$follows)
+			->with('favorites',$favorites)
+			->with('reads',$reads)
+			->with('readings',$readings)
+			->with('friend_check',$friend_check)
+			->with('friends',$friends)
+			->with('followers_count',$followers_count)
+			->with('follows_count',$follows_count)
+			->with('friends_count',$friends_count);
 	}
 }

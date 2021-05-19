@@ -24,20 +24,10 @@ class SearchController extends Controller
 		}
 
 	public function searchBookProfile(Request $request){
-		$a = DB::table('books')->where('title','LIKE','%'.$request->search.'%')->select('title as name','image','id')->get();
-		$a->map(function($a){
-		$a->type = 1;
-		});
-		$b = DB::table('authors')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->get();
-		$b->map(function($b){
-		$b->type = 2;
-		});
-		$c = DB::table('users')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id')->get();
-		$c->map(function($c){
-		$c->type = 3;
-		});
-		$data=$a->merge($b)->merge($c);
-		return view('search')->with('data',$data);
+		$books=DB::table('books')->join('authors','authors.id','=','books.id_author')->where('books.title','LIKE','%'.$request->search.'%')->select('books.id','books.image','books.title','authors.name')->paginate(40);
+		$authors=DB::table('authors')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id','nacionality')->paginate(5);
+		$users= DB::table('users')->where('name','LIKE','%'.$request->search.'%')->select('name','image','id','country')->paginate(5);
+		return view('search')->with('books',$books)->with('authors',$authors)->with('users',$users);
 	}
 }
 

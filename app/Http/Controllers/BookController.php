@@ -21,10 +21,7 @@ class BookController extends Controller
 
 
 	public function showSaga($name){
-		$a = DB::table('books')->where('name_saga','=',$name)->select('title as name','image','id')->get();
-		$a->map(function($a){
-		$a->type = 1;
-		});
-		return view('search')->with('data',$a);
+		$books=DB::table('books')->join('authors','authors.id','=','books.id_author')->where('name_saga','=',$name)->select('books.id','books.image','books.title','authors.name')->get();
+		return view('search')->with('books',$books);
 	}
 }

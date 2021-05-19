@@ -29,10 +29,10 @@
 			<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="container py-2">
 				<div class="row" >
 					<div class="col-2">
-						<img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;">
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;"></a>	
 					</div>
 					<div class="col-8">
-						<span class="d-block"><b>{{$review->user_name}}</b></span>
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><span class="d-block"><b>{{$review->user_name}}</b></span></a>	
 						<span class="small">{{$review->created_at}}</span>
 					</div>
 					<div class="col-2">
@@ -42,11 +42,11 @@
 				<p style="font-size: small;">{{$review->description}}</p>
 				<div class="row py-2" style="border-radius: 15px;border: solid 2px #f2f2f2;">
 					<div class="col-3">
-						<img src="{{asset('books_image/'.$review->image)}}" width="100%" height="140rem" style="border-bottom-right-radius: 5px;border-top-right-radius: 5px;">
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showBookUser',$review->book_id)}}"><img src="{{asset('books_image/'.$review->image)}}" width="100%" height="140rem" style="border-bottom-right-radius: 5px;border-top-right-radius: 5px;"></a>	
 					</div>
 					<div class="col-9">
-						<h5><b>{{$review->title}}</b></h5>
-						<span class="text-muted" style="font-size: small;">{{$review->name}}</span>
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showBookUser',$review->book_id)}}"><h5><b>{{$review->title}}</b></h5></a>	
+						<a class="link-dark" style="text-decoration: none;"  href="{{route('showAuthorUser',$review->author_id)}}"><span class="text-muted" style="font-size: small;">{{$review->name}}</span></a>	
 						<p style="font-size: small;">{{$review->synopsis}}</p>
 						<button class="btn btn-primary btn-sm badge">Agregar a biblioteca</button>
 						<button class="btn btn-primary btn-sm badge">Comprar</button>
@@ -58,10 +58,10 @@
 			<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="container py-2">
 				<div class="row" >
 					<div class="col-2">
-						<img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;">
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;"></a>	
 					</div>
 					<div class="col-8">
-						<span class="d-block"><b>{{$review->user_name}}</b></span>
+						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><span class="d-block"><b>{{$review->user_name}}</b></span></a>	
 						<span class="small">{{$review->created_at}}</span>
 					</div>
 				</div>

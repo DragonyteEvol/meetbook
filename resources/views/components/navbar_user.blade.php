@@ -15,7 +15,8 @@
 		</div>
 		<span class="mx-5">
 		<a href="{{route('home')}}" class="link-dark" style="text-decoration: none;"><button class="btn "><b class="align-middle">Inicio</b></button></a>
-		<a href="#" class="link-dark text-muted" style="text-decoration: none;"><button class="btn"><b class="align-middle">Biblioteca</b></button></a>
+		<a href="#" class="link-dark text-muted" style="text-decoration: none;"><button class="btn"><b title="No disponible" class="align-middle text-muted">Biblioteca</b></button></a>
+		<a href="#" class="link-dark " style="text-decoration: none;"><button class="btn"><b class="align-middle ">Foros</b></button></a>
 		@include('components.notifications')	
 		</span>
 

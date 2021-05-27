@@ -2,14 +2,14 @@
 
 namespace App\Notifications;
 
-use App\FriendProcess;
+use App\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class FriendNotification extends Notification
+class CommentNotification extends Notification
 {
     use Queueable;
 
@@ -18,9 +18,9 @@ class FriendNotification extends Notification
      *
      * @return void
      */
-    public function __construct(FriendProcess $friend_process)
+    public function __construct(Comment $comment)
     {
-	    $this->friend_process=$friend_process;
+	    $this->comment=$comment;
     }
 
     /**
@@ -57,12 +57,13 @@ class FriendNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-		'friend_process'=>$this->friend_process->id,
-		'message'=>'te ha enviado una solicitud de amistad',
+		'comment_id'=>$this->comment->id,
+		'post_id'=>$this->comment->post_id,
+		'message'=>'ha comentado tu post',
 		'user_id'=>Auth::user()->id,
 		'name'=>Auth::user()->name,
 		'image'=>Auth::user()->image,
-		'type'=>'friend',
+		'type'=>'comment',
         ];
     }
 }

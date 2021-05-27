@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$('#search').keyup(function(){
 		$.ajax({
-			url : "http://localhost/LARAVEL/meetbook/public/search/books/profiles/autocomplete",
+			url : route('searchBookProfileAutocomplete'),
 			method : "GET",
 			data:{
 				_token : $("input[name='_token']").val(),

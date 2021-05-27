@@ -18,7 +18,7 @@
 						<div class="form-floating">
 							<textarea name="description" class="form-control" placeholder="Comenta y comparte" id="floatingTextarea2" style="height: 100px"></textarea>
 							<label for="floatingTextarea2">Comparte lo que piensas</label>
-							<input type="submit" value="Publicar" class="btn btn-outline-primary my-2" style="float: right;border-radius: 15px;">
+							<button type="submit" class="btn btn-primary my-1 float-end"><b>Publicar</b></button>		
 						</div>	
 					</form>
 				</div>
@@ -52,29 +52,36 @@
 						<button class="btn btn-primary btn-sm badge">Comprar</button>
 					</div>
 				</div>
-			</div>
-			<hr>
-			@elseif($review->type==2)
-			<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="container py-2">
-				<div class="row" >
-					<div class="col-2">
-						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;"></a>	
+				@elseif($review->type==2)
+				<div style="border-radius: 15px;border: solid 2px #f2f2f2;" class="container py-2">
+					<div class="row" >
+						<div class="col-2">
+							<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><img src="{{asset('users_image/'.$review->user_image)}}" width="80%" height="60rem" style="border-radius: 100%;"></a>	
+						</div>
+						<div class="col-8">
+							<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><span class="d-block"><b>{{$review->user_name}}</b></span></a>	
+							<span class="small">{{$review->created_at}}</span>
+						</div>
 					</div>
-					<div class="col-8">
-						<a class="link-dark" style="text-decoration: none;" href="{{route('showUserUser',$review->user_id)}}"><span class="d-block"><b>{{$review->user_name}}</b></span></a>	
-						<span class="small">{{$review->created_at}}</span>
-					</div>
+					<br>
+					<p class="small" style="font-size: small;">{{$review->description}}</p>
+					@endif
+					@include('components.like_dislike_comment')	
+					@include('components.comments')
 				</div>
 				<br>
-				<p class="small" style="font-size: small;">{{$review->description}}</p>
+				@endforeach
+				<div class="col-12">
+					{{$reviews->links()}}
+				</div>	
+
 			</div>
-			<hr>
-			@endif
-			@endforeach
 		</div>
 	</div>
 </div>
 @endsection
 @section('js')
+@routes
 <script src="{{asset('js/search_nav.js')}}"></script>
+<script src="{{asset('js/show_comments.js')}}"></script>
 @endsection

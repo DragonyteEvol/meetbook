@@ -2,7 +2,25 @@
 @include('components.navbar_user')
 @section('content')
 <div class="container">
-	<div class="row">
+<div style="width: 50%;" class="">
+<h4><b>Filtrar Busqueda</h4>
+<form class="form" method="GET" action="{{route('searchWithFilters')}}">
+<div class="input-group">
+		<select name="genre" class="form-select" id="genres">
+			<option selected>Selecciona un genero</option>
+		</select>
+		@if(isset($search_text))
+		<input type="text" name="text" placeholder="Busqueda" value="{{$search_text}}" class="form-control">
+		@else
+		<input type="text" name="text" placeholder="Busqueda" class="form-control">
+		@endif
+		<button type="submit" class="btn btn-primary "><b>Filtrar</b></button>
+	</div>
+</form>	
+<br>
+
+</div>
+		<div class="row">
 		<!--BOOKS--!>
 		@foreach($books as $book)
 		<div class="col-lg-3 col-md-4 col-sm-6 my-2">
@@ -52,5 +70,7 @@
 </div>
 @endsection
 @section('js')
+@routes
+<script src="{{asset('js/get_genres.js')}}"></script>
 <script src="{{asset('js/search_nav.js')}}"></script>
 @endsection

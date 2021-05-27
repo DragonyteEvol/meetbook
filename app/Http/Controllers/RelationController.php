@@ -76,7 +76,6 @@ class RelationController extends Controller
 	public function allowFriend(Request $request){
 		$friend=FriendProcess::where('target_id','=',Auth::user()->id)->where('sender_id','=',$request->friend)->get();
 		if(count($friend)>0){
-
 			FriendProcess::findOrFail($friend[0]->id)->delete();
 			Relation::create(['user_id'=>$request->friend,'target_id'=>Auth::user()->id,'friend'=>true]);
 			$find=DB::table('notifications')->where('notifiable_id',Auth::user()->id)->where('data','LIKE','%"user_id":'.$request->friend.'%')->get();
@@ -102,5 +101,20 @@ class RelationController extends Controller
 		}else{
 			return back()->with('message','A HACKIAR A SU MADRE BCRRA');
 		}
+	}
+
+	public function showRelationFriend($id){
+		$data= DB::table('friends')->join('users','users.id','=','friends.user_b')->where('friends.user_a','=',$id)->select('users.image','users.name','users.id','friends.created_at','users.country')->paginate(50);
+		return view('show_relations')->with('data',$data);
+	}
+
+	public function showRelationFollower($id){
+		$data= DB::table('relations')->join('users','users.id','=','relations.user_id')->where('target_id','=',$id)->where('follow',true)->select('users.id','users.image','users.name','users.country')->paginate(50);
+		return view('show_relations')->with('data',$data);
+	}
+
+	public function showRelationFollow($id){
+		$data= DB::table('relations')->join('users','users.id','=','relations.target_id')->where('user_id','=',$id)->where('follow',true)->select('users.id','users.image','users.name','users.country')->paginate(8);
+		return view('show_relations')->with('data',$data);
 	}
 }

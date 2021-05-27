@@ -24,8 +24,10 @@ Auth::routes();
 
 //ROUTES PROTEGIDAS
 Route::group(['middleware'=>'auth'],function(){
-	Route::get('/home','RouteController@home');
+	Route::get('/home','RouteController@home')->name('home');
 	Route::get('profile/{user}','RouteController@profile');
+	Route::put('edit/first/user','RouteController@editFirstData')->name('editFirstData');
+	Route::put('already','RouteController@already')->name('already');
 
 	//BOOKS
 	Route::get('book/show/{id}','BookController@showBook')->name('showBookUser');
@@ -33,6 +35,9 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//USERS 
 	Route::get('user/show/{id}','UserController@showUser')->name('showUserUser');
+	Route::get('show/form/edit/user','UserController@showFormEdit')->name('showFormEditUser');
+	Route::put('edit/data/user','UserController@editDataUser')->name('editDataUser');
+	Route::put('edit/image/user','UserController@editImage')->name('editImageUser');
 
 	//AUTHORS
 	Route::get('author/show/{id}','AuthorController@showAuthor')->name('showAuthorUser');
@@ -40,24 +45,46 @@ Route::group(['middleware'=>'auth'],function(){
 	//SEARCH
 	Route::get('/search/books/profiles/autocomplete','SearchController@searchBookProfileAutocomplete')->name('searchBookProfileAutocomplete');
 	Route::get('search/books/profiles','SearchController@searchBookProfile')->name('searchBookProfile');
+	Route::get('search/genres/{genre}','SearchController@searchGenres')->name('searchGenresUser');
+	Route::get('search/with/filters','SearchController@searchWithFilters')->name('searchWithFilters');
 	
 	//REVIEWS
 	Route::post('review/store','ReviewController@storeReview')->name('storeReviewUser');
 
 	//POSTS
 	Route::post('store/post/{id}','PostController@storePost')->name('storePostUser');
+	Route::post('comment/post/{id}','PostController@commentPost')->name('commentPost');
+	Route::get('show/post/{id}','PostController@showPost')->name('showPostUser');
+	Route::get('show/post/notification/{id}','PostController@showPostNotification')->name('showPostUserNotification');
+	//SHOW COMMENTS
+	Route::get('show/comments','PostController@showComments')->name('showCommentsUser');
+	//LIKE AND DISLIKE
+	Route::get('like/post/','PostController@likePost')->name('likePostUser');
+	Route::get('dislike/post/','PostController@dislikePost')->name('dislikePostUser');
 
 	//PROFILE
 	Route::get('/show/profile/','ProfileController@showProfile')->name('showProfile');
 
 	//LIBRARY
 	Route::post('/store/library','LibraryController@storeItemLibrary')->name('storeItemLibraryUser');
+	Route::get('show/library/favorites/{id}','LibraryController@showLibraryFavorite')->name('showLibraryFavorite');
+	Route::get('show/library/reading/{id}','LibraryController@showLibraryReading')->name('showLibraryReading');
+	Route::get('show/library/read/{id}','LibraryController@showLibraryRead')->name('showLibraryRead');
 
 	//RELATIONS
 	Route::post('follow/','RelationController@followUser')->name('followUser');
 	Route::post('add/friend/{id}','RelationController@addFriend')->name('addFriendUser');
 	Route::post('allow/process/friend','RelationController@allowFriend')->name('allowFriend');
 	Route::delete('delete/process/friend','RelationController@declineFriend')->name('declineFriend');
+	Route::get('show/relation/friends/{id}','RelationController@showRelationFriend')->name('showRelationFriend');
+	Route::get('show/relation/followers/{id}','RelationController@showRelationFollower')->name('showRelationFollower');
+	Route::get('show/relation/follows/{id}','RelationController@showRelationFollow')->name('showRelationFollow');
+
+
+	//NOTIFICATIONS
+	Route::get('show/notifications','NotificationController@showNotifications')->name('showNotificationUser');
+
+	Route::get('get/genres','GenreController@getGenres')->name('getGenres');
 
 	//TEST
 	Route::post('test','TestController@test')->name('test');

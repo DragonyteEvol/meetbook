@@ -36,5 +36,6 @@
 </div>
 @endsection
 @section('js')
+@routes
 <script src="{{asset('js/search_nav.js')}}"></script>
 @endsection

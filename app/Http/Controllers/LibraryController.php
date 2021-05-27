@@ -50,4 +50,19 @@ class LibraryController extends Controller
 			return "OK";	
 		}
 	} 
+
+	public function showLibraryRead($id){
+		$data=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',3)->select('books.title','books.image','books.id','books.synopsis')->paginate(50);
+		return view('show_libraries')->with('data',$data);
+	}
+
+	public function showLibraryReading($id){
+		$data=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',2)->select('books.title','books.image','books.id','books.synopsis')->paginate(50);
+		return view('show_libraries')->with('data',$data);
+	}
+
+	public function showLibraryFavorite($id){
+		$data=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',4)->select('books.title','books.image','books.id','books.synopsis')->paginate(50);
+		return view('show_libraries')->with('data',$data);
+	}
 }

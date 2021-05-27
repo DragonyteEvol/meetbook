@@ -1,53 +1,25 @@
 <div>
-	<div class="container">
+	<div class="container" style="display: inline;">
 		<div style="float: left;" class="my-2 mx-2">
-			<a href="/LARAVEL/meetbook/public/admin/home"><img src="{{asset('web_image/icon.png')}}" width="40px" height="50px"></a>
+			<a href="{{route('home')}}"><img src="{{asset('web_image/gomuno.png')}}" width="40px" height="50px"></a>
 		</div>	
-		<div style="display: inline-block;" class="my-2">
+		<div style="display: inline-block;width: auto;" class="my-1">
 			<a href="{{route('showProfile')}}" style="text-decoration: none;" class="link-dark">
 				<img src="{{asset('users_image/'.Auth::user()->image)}}" width="25px" height="25px" style="border-radius: 150px;">
 				<b>{{Auth::user()->name}}</b>
 			</a>
 			<form method="POST" action="{{route('logout')}}">
 				{{csrf_field()}}
-				<input type="submit" value="Cerrar sesión" class="btn btn-outline-danger btn-sm mx-auto" style="border-radius: 10px;font-weight: bold;">
+				<button class="btn badge bg-danger"><b>Cerrar sesión</b></button>
 			</form>
 		</div>
-		<div class="dropdown" style="display: inline;">
-			<button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-				@if(count(auth()->user()->unreadNotifications))
-				<b class="align-middle">Notificaciones</b><span class="badge bg-secondary">{{count(auth()->user()->unreadNotifications)}}</span>
-				@else
-				<b>Notificaciones</b>
-				@endif
-			</button>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				@foreach(auth()->user()->notifications as $notification)
-				<li class="btn btn-light" style="border-radius: 5px;border: solid #f4f4f4 5px;">
-					<div>
-						<a href="{{route('showUserUser',$notification->data['user_id'])}}"><img class="mx-1" src="{{asset('users_image/'.$notification->data['image'])}}" width="45rem" height="45rem" style="border-radius: 100%;float: left;"></a>
-						<a class="link-dark" style="text-decoration: none;font-size: small;" href="{{route('showUserUser',$notification->data['user_id'])}}"><span ><b>{{$notification->data['name']}}</b></span></a>
-						<span style="display: block;font-size: small;">{{$notification->data['message']}}</span>
-						<div style="width: 50%;margin-left: auto;margin-right: auto;">
-							<form action="{{route('allowFriend')}}" method="POST" style="display: inline;">
-								{{csrf_field()}}
-								<button type="submit" class="btn btn-primary btn-sm badge" value="{{$notification->data['user_id']}}" name="friend">Aceptar</button>	
-							</form>
-							<form action="{{route('declineFriend')}}" method="POST" style="display: inline;">
-								@method('DELETE')
-								{{csrf_field()}}
-								<button type="submit" class="btn btn-danger btn-sm badge" value="{{$notification->data['user_id']}}" name="friend">Rechazar</button>	
-							</form>
-						</div>
-					</div>
-				</li>
-				@endforeach
-				<li><button class="btn btn-light form-control">Ver todas</button></li>
-			</ul>
-		</div>
-		
+		<span class="mx-5">
+		<a href="{{route('home')}}" class="link-dark" style="text-decoration: none;"><button class="btn "><b class="align-middle">Inicio</b></button></a>
+		<a href="#" class="link-dark text-muted" style="text-decoration: none;"><button class="btn"><b class="align-middle">Biblioteca</b></button></a>
+		@include('components.notifications')	
+		</span>
 
-		<div style="width: 40%;float: right;" class="m-3">
+		<div style="float: right;width: 30%;" class="m-2">
 			@include('components.search_navbar')
 		</div>
 

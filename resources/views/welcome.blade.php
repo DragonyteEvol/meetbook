@@ -78,7 +78,7 @@ body{
 		</div>
 
 		<div class="row">
-			<div class="col-lg-5 col-md-4 col-sm-12"><img src="{{asset('web_image/welcome-wall.jpg')}}" width="100%" height="600rem"></div>	
+			<div class="col-lg-5 col-md-4 col-sm-12"><img src="{{asset('web_image/akuma-wall.jpg')}}" width="100%" height="600rem"></div>	
 			<div class="col-lg-7 col-md-8 col-sm-12">
 				<br><br>
 				<h1 class="display-1"><b>Meetbook comparte tus historias</b></h1>
@@ -89,7 +89,7 @@ body{
 					@auth
 					<a href="{{ url('/home') }}">Home</a>
 					@else
-					<a onclick="login()" class="btn btn-lg  btn-primary" >Iniciar sessión</a>
+					<a onclick="login()" class="btn btn-lg  btn-primary" >Iniciar sesión</a>
 
 					@if (Route::has('register'))
 					<a onclick="register()" class="btn btn-lg btn-primary">Regístrate</a>

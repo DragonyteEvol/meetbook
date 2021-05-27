@@ -12,15 +12,7 @@
 		<div class="col-4">
 			<img src="{{asset('books_image/'.$book->image)}}" width="100%" height="415px" style="border-radius: 5px;border-top-right-radius: 20px;border-bottom-right-radius: 20px;">
 			<div class="d-grid gap-2 mt-2">
-				<button  class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"  style="border-radius:15px ;"  type="button"><b>Agregar a biblioteca</b></button>
-				<ul class="dropdown-menu" >
-					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},1)">Lista De Deseos</a></li>
-					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},2)">Leyendo</a></li>
-					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},3)">Leido</a></li>
-					<li><a class="dropdown-item" href="#" onclick="storeInLibrary({{$book->id}},4)">Favoritos</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="#">Separated link</a></li>
-				</ul>
+				@include('components.libraries_button')	
 				<button class="btn btn-primary" style="border-radius:15px ;"  type="button"><b>Comprar</b></button>
 			</div>
 			<hr>
@@ -58,7 +50,7 @@
 			<p>
 			@foreach($genres as $genre)
 			<span class="btn btn-sm btn-light rounded-pill">
-				<a href="#" class="btn btn-sm btn-light rounded-pill">{{$genre->genre}}</a>
+				<a href="{{route('searchGenresUser',$genre->genre)}}" class="btn btn-sm btn-light rounded-pill">{{$genre->genre}}</a>
 			</span>
 			@endforeach
 			</p>
@@ -96,7 +88,7 @@
 						</form>
 					</div>
 					<hr>
-					<div class="row">
+					<div class="row p-2"style="border-radius: 15px;border: solid #f2f2f2 2px;font-size: small">
 						@foreach($reviews as $review)
 						<div class="col-2">
 							<img src="{{asset('users_image/'.$review->image)}}" width="70%" height="65rem" style="border-radius: 100%;" title="{{$review->name}}">
@@ -108,7 +100,9 @@
 						<div class="col-1">
 							<p>{{$review->calification}}★</p>
 						</div>
-						<hr class="w-95">
+						@include('components.like_dislike_comment')
+						@include('components.comments')
+						<hr>
 						@endforeach
 						<div class="col-12">
 							{{$reviews->links()}}
@@ -122,27 +116,10 @@
 @endforeach
 </div>
 <hr>
-<!-- REVIEWS --!>
-	<div class="conatainer">
-	</div>
-	@endsection
-	@section('js')
-	<script src="{{asset('js/search_nav.js')}}"></script>
-	<script>
-		function storeInLibrary(id,library){
-					$(document).ready(function(){
-								$.ajax({
-											method: "POST",
-											url: "{{route('storeItemLibraryUser')}}",
-											data:{
-														_token : $("input[name='_token']").val(),
-														library: library,
-														book_id: id
-													}
-											}).done(function(dataJson){
-														console.log(dataJson);
-												})
-							})
-				}
-	</script>
-	@endsection
+@endsection
+@section('js')
+@routes
+<script src="{{asset('js/search_nav.js')}}"></script>
+<script src="{{asset('js/show_comments.js')}}"></script>
+<script src="{{asset('js/libraries.js')}}"></script>
+@endsection

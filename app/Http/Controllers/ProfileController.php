@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\LikeDislike;
 use App\Review;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,7 +12,23 @@ use Illuminate\Support\Facades\DB;
 class ProfileController extends Controller
 {
 	public function showProfile(){
-		$reviews= DB::table('posts')->where('target_id','=',Auth::user()->id)->leftJoin('books','books.id','=','posts.book_id')->leftJoin('authors','authors.id','=','books.id_author')->select('posts.*','books.title','books.synopsis','books.image','authors.name','authors.id as author_id')->orderBy('created_at','desc')->paginate(10);
+		$reviews= DB::table('posts')
+			->where('target_id','=',Auth::user()->id)
+			->leftJoin('books','books.id','=','posts.book_id')
+			->leftJoin('authors','authors.id','=','books.id_author')
+			->leftJoin('post_data_extra','post_data_extra.post_id','=','posts.id')
+			->select('posts.*','books.title','books.synopsis','books.image','authors.name','authors.id as author_id','post_data_extra.like as likes','post_data_extra.dislike as dislikes','post_data_extra.comment as comments')
+			->orderBy('created_at','desc')
+			->paginate(10);
+		$like_dislikes=LikeDislike::where('user_id',Auth::user()->id)->select('like','post_id')->get();
+		foreach($reviews as $review){
+			foreach($like_dislikes as $like_dislike){
+				if($like_dislike->post_id==$review->id){
+					$review->like=$like_dislike->like;
+				}	
+			}
+		}
+
 
 		//BOOKS
 		$favorites=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',Auth::user()->id)->where('library','=',4)->select('books.title','books.image','books.id')->take(2)->get();

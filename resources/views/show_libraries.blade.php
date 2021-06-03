@@ -21,7 +21,7 @@
 				<div class="col-6">
 					<div class="align-middle">
 					<a class="link-dark" style="text-decoration: none;" href="{{route('showBookUser',$book->id)}}"><h5 ><b>{{$book->title}}</b></h5></a>
-					<p >{{$book->synopsis}}</p>
+					<p>{{substr($book->synopsis,0,335)."..."}}</p>
 					</div>
 				</div>
 			</div>

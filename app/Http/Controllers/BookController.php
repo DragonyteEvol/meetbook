@@ -33,7 +33,9 @@ class BookController extends Controller
 				}	
 			}
 		}
-		return view('show_book')->with('data',DB::table('books')->join('authors','authors.id','=','books.id_author')->where('books.id',$id)->select('books.*','authors.name')->get())->with('genres',$book->genres)->with('relations',$relations)->with('reviews',$reviews)->with('califications',Calification::where('book_id','=',$id)->get())->with('libraries',$libraries);
+		$califications=DB::table('califications')->where('book_id',$id)->get();
+
+		return view('show_book')->with('data',DB::table('books')->join('authors','authors.id','=','books.id_author')->where('books.id',$id)->select('books.*','authors.name')->get())->with('genres',$book->genres)->with('relations',$relations)->with('reviews',$reviews)->with('califications',Calification::where('book_id','=',$id)->get())->with('libraries',$libraries)->with('califications',$califications);
 	}
 
 

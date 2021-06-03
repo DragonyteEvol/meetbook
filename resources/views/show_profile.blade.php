@@ -29,6 +29,7 @@
 			</div>
 			<hr>
 			@include('components.profile.friends_data_profile')
+			@include('components.calification_card_profile')
 		</div>
 		<div class="col-7">
 			<h4><b>Publicaciones y reviews</b></h4>

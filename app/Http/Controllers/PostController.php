@@ -129,4 +129,19 @@ class PostController extends Controller
 		$user->unreadNotifications->markAsRead();
 		return view('show_post')->with('reviews',$reviews)->with('comments',$comments);
 	}
+
+	public function showPostCalification($id,$score){
+$reviews= DB::table('posts')
+			->where('user_id','=',$id)
+			->where('type',1)
+			->where('calification',$score)
+			->leftJoin('books','books.id','=','posts.book_id')
+			->leftJoin('authors','authors.id','=','books.id_author')
+			->leftJoin('users','users.id','=','posts.user_id')
+			->leftJoin('post_data_extra','post_data_extra.post_id','=','posts.id')
+			->select('posts.*','books.title','books.synopsis','books.image','authors.name','users.name as name_user','users.image as image_user','authors.id as author_id','post_data_extra.dislike as dislikes','post_data_extra.comment as comments','post_data_extra.like as likes')
+			->orderBy('created_at','desc')
+			->get();
+		$like_dislikes=LikeDislike::where('user_id',Auth::user()->id)->select('like','post_id')->get();
+	}
 }

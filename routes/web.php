@@ -38,6 +38,7 @@ Route::group(['middleware'=>'auth'],function(){
 	Route::get('show/form/edit/user','UserController@showFormEdit')->name('showFormEditUser');
 	Route::put('edit/data/user','UserController@editDataUser')->name('editDataUser');
 	Route::put('edit/image/user','UserController@editImage')->name('editImageUser');
+	Route::get('show/post/calification/{id}/{score}','UserController@showPostCalification')->name('showPostCalification');
 
 	//AUTHORS
 	Route::get('author/show/{id}','AuthorController@showAuthor')->name('showAuthorUser');
@@ -64,12 +65,15 @@ Route::group(['middleware'=>'auth'],function(){
 
 	//PROFILE
 	Route::get('/show/profile/','ProfileController@showProfile')->name('showProfile');
+	Route::get('show/post/profile/calification/{score}','ProfileController@showPostCalification')->name('showPostCalificationProfile');
 
 	//LIBRARY
 	Route::post('/store/library','LibraryController@storeItemLibrary')->name('storeItemLibraryUser');
 	Route::get('show/library/favorites/{id}','LibraryController@showLibraryFavorite')->name('showLibraryFavorite');
 	Route::get('show/library/reading/{id}','LibraryController@showLibraryReading')->name('showLibraryReading');
 	Route::get('show/library/read/{id}','LibraryController@showLibraryRead')->name('showLibraryRead');
+	Route::get('show/library/author/{id}','LibraryController@showLibraryAuthor')->name('showLibraryAuthor');
+	Route::get('show/library/desire/{id}','LibraryController@showLibraryDesire')->name('showLibraryDesire');
 
 	//RELATIONS
 	Route::post('follow/','RelationController@followUser')->name('followUser');

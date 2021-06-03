@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Book;
 use App\Library;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,16 @@ class LibraryController extends Controller
 
 	public function showLibraryFavorite($id){
 		$data=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',4)->select('books.title','books.image','books.id','books.synopsis')->paginate(50);
+		return view('show_libraries')->with('data',$data);
+	}
+
+	public function showLibraryAuthor($id){
+		$data=Book::where('id_author',$id)->paginate(50);
+		return view('show_libraries')->with('data',$data);
+	}
+
+	public function showLibraryDesire($id){
+		$data=DB::table('libraries')->join('books','books.id','=','libraries.book_id')->where('user_id','=',$id)->where('library','=',1)->select('books.title','books.image','books.id','books.synopsis')->paginate(50);
 		return view('show_libraries')->with('data',$data);
 	}
 }

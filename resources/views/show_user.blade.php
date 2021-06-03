@@ -26,6 +26,7 @@
 			<p><b>Descripción: </b><span style="font-size: small;">{{$data->description}}</span></p>
 			<hr>
 			@include('components.user.friends_data_user')
+			@include('components.calification_card')
 		</div>
 		<div class="col-7">
 			@include('components.user.reviews_user')

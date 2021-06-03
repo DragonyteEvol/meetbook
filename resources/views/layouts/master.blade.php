@@ -16,7 +16,7 @@ font-family: 'Roboto', sans-serif;
 }
 </style>
 	</head>
-	<body>
+	<body style="margin: 0;padding: 0;">
 		<div class="container">
 			@yield('content')
 <script>
